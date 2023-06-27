@@ -12,9 +12,9 @@ O foco dos testes com Capybara está no resultado das ações do usuário, e nã
 
 ## Como são feitos os testes com Capybara ?
 
-Para exemplificar um pouco melhor vamos imaginar a seguinte situação: estamos desenvolvendo um aplicativo de compras e desenvolvemos uma funcionalidade que permite que o usuário remova itens de um carrinho de compras virtual. 
+Para exemplificar um pouco melhor imagine a seguinte situação: você está desenvolvendo um aplicativo de compras, este aplicativo tem uma funcionalidade que permite que o usuário remova itens de um carrinho de compras virtual. 
 
-Para testar essa funcionalidade, criamos um teste com Capybara que emula a interação do usuário com o aplicativo no navegador. Seguiremos os passos:
+Para testar essa funcionalidade, será necessário criar um teste com Capybara que emula a interação do usuário com o aplicativo no navegador. Seguindo os passos:
 
 * Acessar a página da loja;
 * Adicionar um item carrinho de compras;
