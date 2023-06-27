@@ -1,6 +1,11 @@
 ---
 sidebar_position: 2
 ---
+Antes da criação do primeiro teste é necessário que o ambiente esteja configurado da maneira correta. Este tópico irá lhe auxiliar a configurar de uma maneira simples e direta o Capybara e o Rspec para que trabalhem em conjunto.
+
+:::caution Atenção
+Este tutorial parte do pressuposto que seu sistema operacional é Unix-like.
+:::
 
 ### Criando sua Gemfile
 

@@ -1,6 +1,7 @@
 ---
 sidebar_position: 3
 ---
+Neste tópico você irá aprender a criar um teste simples com Capybara, como executá-lo e como entender a mensagem do RSpec de falha ou sucesso de um teste.
 
 ### Regras gerais para uso do Rspec
 
@@ -110,5 +111,5 @@ Aqui fica ainda mais clara a necessidade de dar nomes descritivos aos grupos e e
 Neste exemplo, o erro ocorreu pois a URL está incorreta, e o endereço **http://orcafascsio.com/** não existe. Sem se atentar ao terminal, este erro poderia ser difícil de compreender, pois apenas uma letra extra na URL causou a falha. O Rspec então auxilia a encontrar sem dificuldades o problema.
 
 :::note Erros:  
-A maior parte dos problemas poderá ser resolvida apenas verificando o terminal e suas mensagens de erro. Futuramente serão abordadas as mensagens de erro mais comuns e também outras formas de fazer debug.
+A maior parte dos problemas poderá ser resolvida apenas verificando o terminal e suas mensagens de erro. Futuramente serão abordadas as mensagens de erro mais comuns e também outras formas de fazer depuração do código.
 :::
