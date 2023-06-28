@@ -6,8 +6,11 @@ Os testes automatizados, especialmente os testes de interface do usuário, envol
 
 ### Identificando Elementos HTML
 
-Antes de poder interagir com um elemento HTML, é necessário localizá-lo. Para localizar elementos na página, o Capybara fornece uma série de métodos, que permitem selecionar elementos por suas tags, texto, valor, ID, classe CSS e muito mais.
+Para poder interagir com um elemento HTML, é necessário localizá-lo. Para localizar elementos na página, o Capybara fornece uma série de métodos, que permitem selecionar elementos por suas tags, texto, valor, ID, classe CSS e muito mais.
 
-Vamos ver um exemplo simples:
+Antes de aprofundar mais neste tópico, é necessário fazer uma pequena recapitulação: **a boa prática recomenda que elementos HTML tenham ID's únicos para facilitar sua identificação e manipulação**. O mesmo não ocorre com outros seus atributos. Diante disto, é uma boa prática que se utilize o ID ao identificá-los. Isto se dá principalmente pela forma como o Capybara lida ao encontrar mais de um elemento com o mesmo parâmetro de identificação.
 
-ruby
+Inclua o exemplo abaixo dentro do seu arquivo de teste **teste_spec.rb** dentro do escopo do * **describe** *:
+
+
+

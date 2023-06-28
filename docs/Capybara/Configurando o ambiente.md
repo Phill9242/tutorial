@@ -1,37 +1,31 @@
 ---
 sidebar_position: 2
 ---
-Antes da criação do primeiro teste é necessário que o ambiente esteja configurado da maneira correta. Este tópico irá lhe auxiliar a configurar de uma maneira simples e direta o Capybara e o Rspec para que trabalhem em conjunto.
+Antes da criação do primeiro teste é necessário que o ambiente esteja configurado da maneira correta. Este tópico irá lhe auxiliar a configurar de uma maneira simples e direta o Capybara com seu projeto rails para que trabalhem em conjunto.
 
 :::caution Atenção
 Este tutorial parte do pressuposto que seu sistema operacional é Unix-like.
 :::
 
-### Criando sua Gemfile
+### Projeto modelo
 
-Para começar, crie uma pasta e dentro desta pasta crie o seu arquivo Gemfile.
+Para fazer a maior parte dos testes será utilizado um aplicativo simplificado criado com Ruby 3.0.1 e Rails 7.0.5. Como diversos testes irão envolver o envio de informação de formulários, não é uma boa prática utilizar sites ou aplicações que estão em operação, pois podemos acabar "sujando" a base de dados com informações falsas ou inúteis.
+
+:::info Download projeto:
+Baixe o projeto neste [link](https://github.com/Phill9242/capybara-tests.git). 
+:::
+
+### Gems necessárias
+
+Abra a Gemfile do projeto e olhe o grupo de testes. Você verá algo parecido com isto:
 
 ```
-mkdir tutorialcapybara
-cd tutorialcapybara
-touch Gemfile
-
+group :test do
+  gem "capybara"
+  gem "selenium-webdriver"
+  gem "webdrivers"
+end
 ```
-
-Adicione dentro do Gemfile as seguintes gems:
-
-```
-gem 'rspec'
-gem 'capybara'
-gem 'selenium-webdriver'
-gem 'webdrivers'
-```
-
-**rspec**:
-
-Esta é a gem principal para a criação de testes em Ruby. É uma gem membro da família [xUnit](http://xunitpatterns.com/xUnit.html) apesar de algumas diferenças com a escrita clássica do xUnit.
-
-Seu objetivo é tornar a escrita de testes mais fácil, utilizando uma linguagem muito próxima da natural, ou seja, a forma como nos comunicamos. Também será a responsável por construir a "fundação" desta versão simplificada de testes, com os arquivos e pastas necessários.
 
 **capybara**:
 
@@ -45,54 +39,23 @@ A gem Selenium WebDriver é uma ferramenta de automação de navegador. A capyba
 
 A gem Webdrivers simplifica o gerenciamento dos drivers necessários para a Selenium WebDriver se comunicar com diferentes navegadores.
 
-### Configurando o Rspec
 
-Comece instalando as gems através do comando:
-```
-bundle install
-```
 
-Após instalar todas as dependências, configure o projeto com o comando abaixo:
+### Criando seu próprio projeto
 
-``` 
-rspec --init
-```
+Caso queira criar uma aplicação Rails com Capybara para realizar seus próprios testes, siga os passos abaixo.
 
-Um arquivo chamado *spec_helper.rb* deve ter sido criado dentro da pasta *spec*.
+Para começar, crie um novo projeto rails:
 
-Para configurar o arquivo, inicialmente faça um **require** no topo dele, adicionando
-
-```
-require 'capybara/rspec'
-```
-
-Agora adicione abaixo da linha ```RSpec.configure do |config|``` a seguinte configuração:
-```
-config.include Capybara::DSL
-```
-
-Por fim, escreva nas linhas finais:
-
-```
-Capybara.run_server = false
-Capybara.default_driver = :selenium
-```
-
-Ao fim, o arquivo de configuração ficará parecido com o exemplo abaixo:
-
-```
-require 'capybara/rspec
-# código suprimido
-
-RSpec.configure do |config|
-  config.include Capybara::DSL
-# código suprimido
-end
-
-# código suprimido
-Capybara.run_server = false
-Capybara.default_driver = :selenium
-```
-:::tip TO DO
-  colocar link que aponta para configurar webdriver headless
+:::caution Atenção:
+É necessário utilizar versão 2.7.0 ou superior de Ruby!
 :::
+
+```
+rails new **"nome do projeto"**
+```
+
+Pronto, isto é tudo o que você precisa!
+
+Ao abrir sua gemfile poderá perceber que o capybara foi adicionado automaticamente. Isto porque a partir da versão 5 do Rails o capybara é instalado por padrão em conjunto com estas outras duas gems. Caso sua versão do Rails seja anterior, você deverá adicionar o capybara manualmente.
+
