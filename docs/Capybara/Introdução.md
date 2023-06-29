@@ -2,6 +2,11 @@
 sidebar_position: 1
 ---
 Começaremos detalhando o que é o Capybara e sua função dentro da criação de testes.
+
+:::caution Atenção
+Este tutorial parte do pressuposto que seu sistema operacional é Unix-like.
+:::
+
 ## O que é Capybara ?
 
 Capybara é uma gem para Ruby utilizada para a criação de testes voltados para o comportamento do usuário. Isto quer dizer que ela é uma ferramenta que nos auxilia no desenvolvimento guiado por comportamento (BDD - Behavior-Driven Development), uma abordagem de desenvolvimento de software que prioriza a descrição do comportamento do sistema do ponto de vista do usuário.
@@ -22,4 +27,6 @@ Para testar essa funcionalidade, será necessário criar um teste com Capybara q
 
 Se todas as etapas foram seguidas e o item foi removido ao final, significa que a funcionalidade, do ponto de vista do usuário, está funcionando.
 
-O Capybara então nos auxilia a executar estas ações e verificar se o resultado é o esperado. Através de sua DSL, diversos métodos são disponibilizados para interagir com o navegador através de comandos intuitivos e simples. Durante este tutorial você irá aprender a como configurar seu ambiente, criar testes, boas práticas de escrita e organização, mensagens de erro e depuração e sobre os diferentes tipos de métodos oferecidos pelo Capybara.
+O Capybara então nos auxilia a executar estas ações e verificar se o resultado é o esperado. Através de sua DSL, diversos métodos são disponibilizados para interagir com o navegador através de comandos intuitivos e simples. 
+
+Durante este tutorial você irá aprender a como configurar seu ambiente, criar testes, boas práticas de escrita e organização, mensagens de erro, depuração e sobre os diferentes tipos de métodos oferecidos pelo Capybara.
