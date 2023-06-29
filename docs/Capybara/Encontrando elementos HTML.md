@@ -10,7 +10,7 @@ Para poder interagir com um elemento HTML, é necessário localizá-lo. Para loc
 
 Antes de aprofundar mais neste tópico, vale a pena reforçar: **a boa prática recomenda que elementos HTML tenham ID's únicos para facilitar sua identificação e manipulação**. O mesmo não ocorre com outros seus atributos. Por isso, é uma boa prática usar o ID ao identificar elementos. Isto se dá principalmente pela forma como o Capybara lida ao encontrar mais de um elemento com o mesmo parâmetro de identificação.
 
-Navegue até a parte de **testes de identificação** no site de apoio. Lá você verá que há dois formulários idênticos, ao utilizar a ferramenta de inspeção é possível ver que a única coisa que os diferencia é seu ID.
+Navegue até a página de **teste de identificação** no site de apoio. Lá você verá que há dois formulários idênticos; ao utilizar a ferramenta de inspeção é possível ver que a única coisa que os diferencia é seu ID.
 
 Claro que se trata de uma situação hipotética. Você dificilemente verá dois formulários idênticos, com o mesmo objetivo, em uma página. No entanto é possível que haja diferentes formulários cujo algum dos campos seja muito semelhante. Imagine que em uma mesma página você pode realizar um login, e há um campo que recebe um e-mail, mas ao final da página também há um campo que recebe o e-mail do usuário, mas esse campo é para a inscrição em uma *newsletter*. Provavlmente ambos os campos terão o mesmo placeholder, nome e classe, mas seu ID será único.
 
