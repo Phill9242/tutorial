@@ -60,7 +60,7 @@ Se executarmos o teste novamente, uma mensagem de erro será exibida no terminal
 A mensagem de erro ***Ambiguous match*** é uma exceção lançada pelo capybara quando mais de um elemento é encontrado com o parâmetro passado. Como os dois formulários utilizam o mesmo placeholder para o e-mail, o Capybara então informa que é dois elementos foram encontrados com o mesmo campo **Digite seu email**.
 
 :::tip Dica
-Como não é necessário especificar o tipo de elemento no parâmetro é possível que o erro de ***Ambiguous match*** ocorra mesmo que um elemento tenha um atributo igual a um diferente tipo de atributo de outro elemento. Por exemplo, se um elemento tem um label com o mesmo nome do ID de outro elemento o erro ainda irá ocorrer.
+Como não é necessário especificar o tipo de elemento no parâmetro é possível que o erro de ***Ambiguous match*** ocorra mesmo que um elemento tenha um atributo igual a um diferente tipo de atributo de outro elemento. Por exemplo, se um elemento tem um label com o mesmo nome do ID de outro elemento o erro ainda irá ocorrer. Para garantir que você está procurando por um ID, adicione # como prefixo, ficando desta forma find_field "#email2".
 :::
 
 ### Elementos inexistentes

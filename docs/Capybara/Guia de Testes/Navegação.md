@@ -11,8 +11,8 @@ Como você pôde perceber, o método ***visit*** é utilizado em quase todos os 
 Para visitar uma página basta adicionar esta página como parâmetro ao método ***visit***. Esta página não precisa estar presente na aplicação, pode ser qualquer página acessível na internet.
 
 :::caution Atenção:
-Ao tentar acessar qualquer página, o Capybara por padrão adiciona a porta que está sendo utilizada. Testes que navegam até páginas externas, como ***visit ("https://orcafascio.com/")*** falharão, pois ele fará uma chamada em uma porta específica, e o endereço será transformado em algo como **https://orcafascio.com:4045/**. Já que esta porta não é acessível o método falhará. 
-Para contornar este problema você deve mudar sua configuração Capybara para modificar o parâmetro ***always_include_port = false***. Para mais detalhes sobre esse erro consulte a [documentação sobre visit](https://www.rubydoc.info/gems/capybara/Capybara%2FSession:visit).
+Ao tentar acessar qualquer página, o Capybara por padrão adiciona ao caminho URL a porta que está sendo utilizada. Testes que navegam até páginas externas falharão,como ***visit ("https://orcafascio.com/")***. Isso ocorre pois ele fará uma chamada em uma porta específica, e o endereço será transformado em algo como **https://orcafascio.com:4045/**. Já que esta porta não é acessível o método falhará. 
+Para contornar este problema você deve mudar sua configuração Capybara para modificar o parâmetro ***always_include_port = false***. No entanto essa mudança pode trazer problemas ao fazer teste locais. Para mais detalhes sobre esse erro consulte a [documentação sobre visit](https://www.rubydoc.info/gems/capybara/Capybara%2FSession:visit).
 :::
 
 Crie um novo arquivo de teste dentro da pasta *system* para criar os testes de navegação. Para seguir o padrão utilizado até agora, chamaremos o arquivo de **navegacao_test.rb**.
@@ -57,7 +57,7 @@ Modifique o seu teste para incluir uma checagem de elemento
   end
 ```
 
-Perceba que este novo teste agora tem 1 assertion, mas continua com 0 falha
+Perceba que este novo teste agora tem 1 assertion, mas continua com 0 falha:
 
 ![image](../../../static/img/capybara/contarformularios.png)
 
@@ -65,13 +65,15 @@ Esse teste faz diversas ações na linha do ***assert_equal***. Para entender me
 
 * Em primeiro lugar, o método ***assert_equal*** é um método simples, ele recebe 2 argumentos e verifica se ambos são iguais. Você pode entendê-lo como: o argumento 1 é igual ao argumento 2? Se forem iguais, o teste passará, se forem diferentes o teste falhará;
 
-* Foram passados dois parâmetros para o teste, o primeiro é um número simples, o número **2**. O segundo parâmetro, passado depois da vírgula é **all('form').length**;
+* Foram passados dois parâmetros para o teste, o primeiro é um número simples, o número **2**. O segundo parâmetro, passado depois da vírgula, é **all('form').length**;
 
 * O método ***all*** retorna TODOS os elementos de uma página. Mas neste caso ele recebeu o parâmetro ***form***, o que significa que de todos os elementos da página ele irá retornar apenas os formulários;
 
 * Quanto ao objeto retornado pelo método ***all*** nós iremos pegar apenas o tamanho, e não o elemento em si, por isso o uso do método ***length*** Como existem dois formulários na página, ele retorna o número 2.
 
 * Por fim, o assert_equal então retorna *true*, pois 2 é igual a 2, e portanto o teste passou.
+
+Claro que este é apenas um teste hipotético e apenas verificar o número de formulário não é o suficiente para dizer que a página atual é de fato a que estávamos procurando. A verificação dos elementos e textos irá depender de cada caso concreto e de como a aplicação toda está arranjada.
 
 Apenas para fins didáticos, mude o valor de 2 do ***assert_equal*** para 1, e deixe-o desta forma:
 
@@ -82,7 +84,7 @@ Apenas para fins didáticos, mude o valor de 2 do ***assert_equal*** para 1, e d
   end
 ```
 
-Agora uma mensagem de erro irá aparecer
+Agora uma mensagem de erro irá aparecer:
 
 ![image](../../../static/img/capybara/errocontagemformularios.png)
 
@@ -113,6 +115,6 @@ Neste caso, ao invés de iniciar diretamente na página de identificação, o te
 
 ### go_back e go_forward
 
-Esses dois métodos simulam a interação através das setas de voltar (***go_back***) ou avançar uma página (***go_forward***) assim como as setas na parte superior do navegador. São métodos situacionais e que tem aplicações muito específicas.
+Esses dois métodos simulam a interação com o o histórico do navegador através das ações de voltar (***go_back***) ou avançar em uma página (***go_forward***); assim como as setas na parte superior do navegador. São métodos situacionais e que tem aplicações muito específicas.
 
-Por exemplo, imagine uma situação em que um usuário preenche um formulário, clica em enviar, mas esquece de preencher um campo obrigatório. A aplicação pode então apresentar uma mensagem de erro e o usuário pode querer voltar para a página anterior para verificar as informações que digitou antes de preencher o formulário. Sua aplicação pode se comportar de duas formas neste caso: apagar os valores preenchidos e não permitir que o usuário recupere os valores digitados anteriormente, ou manter os valores salvos para que ele revise apenas os campos errados.
+Por exemplo, imagine uma situação em que um usuário preenche um formulário, clica em enviar, mas esquece de preencher um campo obrigatório. A aplicação pode então apresentar uma mensagem de erro e o usuário pode querer voltar para a página anterior para verificar as informações que digitou antes de preencher o formulário. A aplicação pode se comportar de duas formas neste caso: apagar os valores preenchidos e não permitir que o usuário recupere os valores digitados anteriormente, ou manter os valores salvos para que ele revise apenas os campos errados. Com esse método é possível verificar se algum desses comportamentos está presente e de acordo com a especificação do software.
