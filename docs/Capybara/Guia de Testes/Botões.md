@@ -4,13 +4,19 @@ sidebar_position: 3
 
 Os botões são uma das principais formas de interação com páginas WEB. São responsáveis por submeter formulários, abrir pop up e modais, redirecionar para outras páginas, entre outras coisas. Essa seção irá lhe ensinar como interagir com os botões mais comuns.
 
-## *click_button*
-
 Utilize o arquivo **botao_test** para adicionar os seus testes.
 
 Navegue até a página **Botões** e clique em cada botão para entender o que eles fazem. Depois volte a este tutorial para testar cada um deles.
 
 Estes testes serão feitos com todos os botões, da esquerda para a direita.
+
+## Método *click_button*
+
+Nesta seção será utilizado o método ***click_button*** para interagir com os botões. Este método procura por um botão cujo atributo tenha o nome passado como parâmetro, podendo ser uma classe, ID, etc. 
+
+:::caution Atenção:
+O método ***click_button*** procura apenas por **botões**, e portanto não é possível interagir com links ou outros elementos que "parecem" botões. Caso você tente interagir com elementos que não são botões, mesmo que utilize o identificador com o nome correto o teste não funcionará da forma adequada.
+:::
 
 ### Botão "Exibir Flash de Sucesso"
 
@@ -26,7 +32,7 @@ end
 
 * Este teste começará visitando a página de **Botões** utilizando o método ***visit***, que você já conhece;
 
-* Após, ele chamará o método ***click_button***. Este método procura por um botão na página e clica nele. Neste caso estamos procurando pelo botão utilizando seu ID **botaoflashsucesso**;
+* Após, ele chamará o método ***click_button***. Neste caso estamos procurando pelo botão utilizando seu ID **botaoflashsucesso**;
 
 * Por fim, um novo método, o ***assert_text***. Este método procura por um texto EXATO, ou seja, ele diferenciará maiúsculas de minúsculas e irá comparar também os símbolos. O texto que procuramos é **"Sucesso!"**, que é exibido na forma de uma mensagem *flash*;
 
@@ -100,3 +106,76 @@ Três pontos importantes merecem nossa atenção aqui:
 :::danger Cuidado!
 Alguns métodos do Capybara não são capazes de inferir o tipo de atributo do elemento procurado! Por exemplo, o método find_field consegue identificar o tipo de campo independentemente de como você passa o argumento. No entanto, para o método assert_selector e outros semelhantes, é necessário passar um seletor que identifique explicitamente o atributo que estamos procurando. Por exemplo, .alert para uma classe ou #myID para um ID. Certifique-se de sempre verificar a documentação e entender como os métodos que você está utilizando lidam com argumentos.
 :::
+
+### Botão "Mensagem com Alert"
+
+Embora seja comum utilizar *flash* para criar as mensagens no rails, ainda é possível que as mensagens sejam exibidas em uma janela de *alert*.
+
+Para verificar como lidar com essa situação, veja o exemplo abaixo:
+
+```
+test "testar botão de mensagem com alert" do
+  visit botoes_path
+  click_button "botaomensagemalert"
+  alert_text = accept_alert
+  assert_equal 'mensagem de dentro do alert', alert_text
+end
+```
+
+No caso do teste de um alerta não é possível procurar elementos, isto porque os elementos de um alert não são parte do DOM. Ainda assim o Capybara oferece algumas maneiras de lidar com isso:
+
+* Caso esteja criando um teste que precisa aceitar a mensagem, utilize o método ***accept_alert***. Ele irá procurar um modal na página e aceitar a mensagem, neste caso clicando em **ok**;
+
+* No caso de recusar uma mensagem, utilize o método ***dismiss_confirm***;
+
+* Por fim, existem aquelas casos onde uma mensagem de alerta aparece pedindo que você digite algo, como por exemplo ao apagar um repositório no github ele pede para confirmar o nome do repositório antes. Nestes casos utilize o método ***accept_prompt***, e como parâmetro escreva o texto desta forma **(with: 'texto desejado')**. Assim o alerta será aceito com a mensagem passada.
+
+Todos os métodos acima retornam o texto de dentro alerta. No nosso caso o texto **mensagem de dentro do alert**:
+
+![image](../../../static/img/capybara/mensagemalert.png)
+
+Desta forma, podemos verificar se um alerta foi gerado, com o método ***accept_alert***, salvamos o seu retorno dentro de uma variável, e comparamos com o texto que queríamos que fosse exibido utilizando o ***assert_equal***.
+
+Todavia, já vimos que não é uma boa prática verificar o texto exato de uma mensagem de erro ou sucesso, por isso, apenas utilizar ***accept_alert*** seria suficiente. Caso um alerta não seja gerado pelo botão, um erro informando que o elemento não foi encontrado será gerado:
+
+![image](../../../static/img/capybara/cannotfindmodal.png)
+
+Assim, o ***accept_alert*** sozinho garante que o usuário verá uma mensagem ao clicar no botão.
+
+### Botão "Nova Janela"
+
+Este botão irá criar uma nova janela no navegador. O desafio neste caso é verificar qual página foi aberta.
+
+Para fazer esse teste é necessário adicionar subetapas ao teste:
+
+```
+test "testar botão de nova janela" do
+  visit botoes_path
+
+  janela_aberta = window_opened_by do
+    click_button "botaonovajanela"
+  end
+
+  within_window janela_aberta do
+    assert_selector('#titulosite')
+  end
+end
+```
+
+Destrinchando o teste acima temos:
+
+``` 
+janela_aberta = window_opened_by do
+  click_button "botaonovajanela"
+end
+```
+
+* Nesta parte, o método ***window_opened_by*** irá retornar uma janela aberta ao clicar no botão **Nova Janela**. Esta janela então é salva em uma variável chamada **janela_aberta**;
+
+* Com a variável contendo todos os elementos DOM da janela aberta, utilizamos o método ***within_window*** com um bloco de código, passando como parâmetro a variável **janela_aberta**;
+
+* Dentro deste bloco de código, verificamos se essa janela que foi aberta possui o elemento que queremos, utilizando o método ***assert_selector***.
+
+Claro que este é apenas um exemplo, a forma você irá identificar qual janela foi aberta depende do seu caso.
+
+## Outros métodos
