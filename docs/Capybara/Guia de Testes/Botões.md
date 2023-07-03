@@ -10,7 +10,7 @@ Navegue até a página **Botões** e clique em cada botão para entender o que e
 
 Estes testes serão feitos com todos os botões, da esquerda para a direita.
 
-## Método *click_button*
+## Método ***click_button***
 
 Nesta seção será utilizado o método ***click_button*** para interagir com os botões. Este método procura por um botão cujo atributo tenha o nome passado como parâmetro, podendo ser uma classe, ID, etc. 
 
@@ -178,11 +178,11 @@ end
 
 Claro que este é apenas um exemplo, a forma você irá identificar qual janela foi aberta depende do seu caso.
 
-## *click_link*
+## ***click_link***
 
 Conforme mencionado anteriormente, alguns links podem ter a aparência de botões, então apra interagir com eles deve-se utilizar o método ***click_link***. Caso não se lembre, pode revisitar seu objetivo [aqui](/docs/Capybara/Guia%20de%20Testes/Navegação#click_link).
 
-## *click_on*
+## ***click_on***
 
 Também é possível fazer com que o Capybara interaja tanto com links quanto com botões utilizando o método ***click_on***. Ele funciona como uma combinação dos métodos ***click_button*** e ***click_link***, não sendo necessário específicar exatamente qual dos elementos você está interagindo.
 
@@ -215,4 +215,8 @@ Lembre-se, para interagir com os elementos dentro do dropdown, o botão dropdown
 
 ![image](../../../static/img/capybara/dropdownbotao.png)
 
-No entanto, caso você tente interagir com estes elementos antes de interagir com o botão de dropdown, um erro será apontado, dizendo que o elemento não existe. **Mas se eu consigo ver o elemento pela ferramenta de inspeção, por qual motivo não consigo interagir com ele?** O Capybara é uma ferramenta que emula o comportamento de um usuário, então se um elemento não está disponível para o usuário, ou seja, se ele não está visível, não é possível para o Capybara interagir. Isto é especialmente útil para que seja possível verificar se o usuário consegue ou não ver e interagir com determinados elementos na página Web, ainda que a página HTML contenha estes elementos. Por exemplo, um elemento pode não estar sendo renderizado corretamente devido a um erro no script da página. O comportamento do Capybara pode ajudar a identificar este tipo de problema.
+No entanto, caso você tente interagir com estes elementos antes de interagir com o botão de dropdown, um erro será apontado, dizendo que o elemento não existe. 
+
+**Mas se eu consigo ver o elemento pela ferramenta de inspeção, por qual motivo não consigo interagir com ele?** 
+
+O Capybara é uma ferramenta que emula o comportamento de um usuário, então se um elemento não está disponível para o usuário ou não está visível, não é possível para o Capybara interagir. Isto é especialmente útil para que seja possível verificar se o usuário consegue ou não ver e interagir com determinados elementos na página Web, ainda que a página HTML contenha estes elementos. Por exemplo, um elemento pode não estar sendo renderizado corretamente devido a um erro no script da página. O comportamento do Capybara pode ajudar a identificar este tipo de problema.

@@ -21,7 +21,7 @@ Adicione ao arquivo o conteúdo:
 ```
 class IdentificacaoTest < ApplicationSystemTestCase
 
-  test "visitar página de identificação e preencher o formulário 2" do
+  test "visitar página de identificação encontrar formulário 2" do
     visit identificacao_path
     find_field "email2"
   end
@@ -47,7 +47,7 @@ Agora imagine que no exemplo acima, ao invés de utilizar um ID único para enco
 Mude o parâmetro **email2** para **Digite seu email**
 
 ```
-  test "visitar página de identificação e preencher o formulário 2" do
+  test "visitar página de identificação encontrar formulário 2" do
     visit identificacao_path
     find_field "Digite seu email"
   end
@@ -68,7 +68,7 @@ Como não é necessário especificar o tipo de elemento no parâmetro é possív
 Agora repita o teste, modificando o parâmetro do método ***find_field*** para **email3**
 
 ```
-  test "visitar página de identificação e preencher o formulário 2" do
+  test "visitar página de identificação encontrar formulário 2" do
     visit identificacao_path
     find_field "email3"
   end

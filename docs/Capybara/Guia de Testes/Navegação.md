@@ -97,7 +97,7 @@ No final os testes irão depender da aplicação que você está testando.
 
 ## Outros métodos de navegação
 
-### click_link
+### ***click_link***
 
 Além do método ***visit*** o Capybara permite que as páginas sejam visitadas clicando em *links*
 
@@ -113,7 +113,7 @@ end
 
 Neste caso, ao invés de iniciar diretamente na página de identificação, o teste começa na página *root*, clica no *link* da navbar e depois faz a checagem pelo número de formulários para garantir que está na página de identificação.
 
-### go_back e go_forward
+### ***go_back*** e ***go_forward***
 
 Esses dois métodos simulam a interação com o o histórico do navegador através das ações de voltar (***go_back***) ou avançar em uma página (***go_forward***); assim como as setas na parte superior do navegador. São métodos situacionais e que tem aplicações muito específicas.
 
