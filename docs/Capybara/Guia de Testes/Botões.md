@@ -178,4 +178,41 @@ end
 
 Claro que este é apenas um exemplo, a forma você irá identificar qual janela foi aberta depende do seu caso.
 
-## Outros métodos
+## *click_link*
+
+Conforme mencionado anteriormente, alguns links podem ter a aparência de botões, então apra interagir com eles deve-se utilizar o método ***click_link***. Caso não se lembre, pode revisitar seu objetivo [aqui](/docs/Capybara/Guia%20de%20Testes/Navegação#click_link).
+
+## *click_on*
+
+Também é possível fazer com que o Capybara interaja tanto com links quanto com botões utilizando o método ***click_on***. Ele funciona como uma combinação dos métodos ***click_button*** e ***click_link***, não sendo necessário específicar exatamente qual dos elementos você está interagindo.
+
+### Botão "Dropdown"
+
+Um botão de dropdrow funciona de forma similar aos outros botões, basta interagir com ele com o método adequado para que os elementos "escondidos" sejam exibidos. A partir de então, interaja com os elementos dentro do dropdown.
+
+```
+test "testar botão dropdown" do
+  visit botoes_path
+  
+  click_button "botaodropdown"
+  click_on "dropdown1"
+
+  accept_alert
+end
+```
+
+Observe o exemplo acima:
+
+* Primeiro, o teste clica no botão Dropdown para exibir as opções do menu;
+
+* Agora, os itens são exibidos e é possível interagir com eles. Então o método ***click_on*** é utilizado para clicar na opção 1;
+
+* Sabendo que um *alert* deveria exibido, o teste utiliza o método ***accept_alert*** para garangir que tudo está correto.
+
+Perceba que foi utilizado o método ***click_on*** ao invés do ***click_button***, uma vez que o elemento no dropdrown não é um botão, mas sim um link. Claro que o método ***click_link*** também poderia ter sido utilizado, mas ao invés de preocupar-se com o exato elemento exibido, a única coisa que o teste busca neste caso é interagir com ele, então não é necessário garantir o elemento exato. Neste exemplo, o elemento é um acessório, e não um fim, e o seu tipo pode ser desprezado.
+
+Lembre-se, para interagir com os elementos dentro do dropdown, o botão dropdown deve ser clicado primeiro. Quando interagimos com a página utilizando a ferramenta de inspeção de desenvolvedor é possível verificar que os elementos do dropdown podem ser inspecionados mesmo antes de expandir o botão de dropdown, conforme mostra a imagem abaixo:
+
+![image](../../../static/img/capybara/dropdownbotao.png)
+
+No entanto, caso você tente interagir com estes elementos antes de interagir com o botão de dropdown, um erro será apontado, dizendo que o elemento não existe. **Mas se eu consigo ver o elemento pela ferramenta de inspeção, por qual motivo não consigo interagir com ele?** O Capybara é uma ferramenta que emula o comportamento de um usuário, então se um elemento não está disponível para o usuário, ou seja, se ele não está visível, não é possível para o Capybara interagir. Isto é especialmente útil para que seja possível verificar se o usuário consegue ou não ver e interagir com determinados elementos na página Web, ainda que a página HTML contenha estes elementos. Por exemplo, um elemento pode não estar sendo renderizado corretamente devido a um erro no script da página. O comportamento do Capybara pode ajudar a identificar este tipo de problema.
