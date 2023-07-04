@@ -1,115 +1,75 @@
 ---
 sidebar_position: 3
 ---
-Neste tópico você irá aprender a criar um teste simples com Capybara, como executá-lo e como entender a mensagem do RSpec de falha ou sucesso de um teste.
+Neste tópico você irá aprender a criar um teste simples com Capybara, como executá-lo e como entender as mensagens de falha ou sucesso de um teste.
 
-### Regras gerais para uso do Rspec
+## Diretório e nomenclatura
 
-Em primeiro lugar, é necessário que todos os testes criados utilizando o Capybara em conjunto com o Rspec estejam dentro da pasta **spec**. Isto porque, por convenção, o Rspec procura por testes no diretório **spec** quando executado.
+Para criar um teste unindo Capybara e Rails é necessário entender primeiro a estrutura utilizada para rodar a sua suíte de testes.
 
-Além disto, deve-se nomear os nossos testes com o final **_spec.rb**: 
-* **_spec** sinaliza para o Rspec que aquele arquivo contém uma suíte de testes a ser executada;
-* **.rb** determina que a extensão do arquivo é Ruby. 
+A depender da ferramenta utilizada para executar os testes, a estrutura do arquivos de testes, seus nomes e a forma de executá-los irá mudar.
 
-:::info Info:
-  O RSpec é uma ferramenta de testes completa, composta de múltiplas bibliotecas. No entanto, este tutorial não irá se aprofundar na sua utilização, pois seu objetivo é utilizá-lo apenas como um suporte para o aprendizado do Capybara. Não deixe de consultar a [documentação](https://rspec.info/documentation/) para entender um pouco mais sobre o seu uso.
+Por exemplo, se você utilizar o Rspec é necessário que os arquivos de testes tenham o sufixo **_spec.rb**, caso utilize o Cucumber, é necessário que eles estejam dentro de um diretório específico.
+
+No caso dos exemplos utilizados neste tutorial, o Rails será o responsável por executar os testes. Por conta do padrão utilizado pela combinação de Rails e Capybara os testes serão colocados dentro da pasta **test/system**, e todos os testes devem terminar com o sufixo **_test.rb**
+
+## Organizando seus testes
+
+É possível agrupar os testes de diferentes formas: por funcionalidade, objetivo, páginas testadas, controllers, etc. Neste projeto os testes foram divididos de forma a facilitar a navegação pelas seções presentes no [guia de testes](/docs/category/guia-de-testes), pois era o que fazia mais sentido dentro deste projeto específico. 
+
+Lembre-se que a forma como você dividirá os testes depende dos padrões adotados pela sua equipe e pela sua facilidade de organização.
+
+## Estrutura dos testes
+
+É necessário que um teste tenha uma finalidade bem definida, como por exemplo testar o botão "Enviar" na página "Formulário de Cobrança". Mas além disso é necessário também que a forma como ele foi escrito tenha clareza e objetividade. Diante disto, a estrutura de um teste é fundamental para facilitar sua compreensão por outros desenvolvedores e mesmo para nos ajudar a organizar melhor a parte lógica. Este tutorial seguirá o modelo de **A**rrange **A**ct **A**ssert, ou AAA
+
+### Arrange
+
+Esta é a primeira etapa na escrita de um teste. Nesta etapa, você configura os objetos que serão testados. Você cria os objetos e configura seus estados iniciais, bem como quaisquer dependências externas que esses objetos precisam para funcionar corretamente. Isso pode envolver a criação de objetos fictícios (também conhecidos como mocks ou stubs), a preparação de entradas para o código que está sendo testado e a configuração de quaisquer condições prévias para o teste.
+
+**Exemplo:** Adicionar um usuário ao banco de dados para testar a funcionalidade de deletar um usuário. O objetivo do teste é apagar uma entrada de dados, mas antes de apagar essa entrada nós precisamos criá-la.
+
+### Act
+
+Esta é a etapa onde você interage com o objeto que está sendo testado. Você realiza uma ação ou chama um método e armazena o resultado para testar na próxima etapa. O foco aqui é sobre o código que está realmente sendo testado. Pode ser que mais de uma ação ou método seja chamado, já que alguns testes dependem de múltiplas interações, como o preenchimento de um formulário.
+
+**Exemplo:** Deletar o usuário. Enquanto os passos do **arrange** "preparam o terreno", a ação ocorre nesta segunda parte.
+
+### Assert 
+
+Nesta última etapa, você verifica se o resultado da ação (**Act**) é o que você esperava. Isto é onde você realmente "testa" o seu código. Enbora a ação tenha ocorrido na etapa anterior, é aqui que se torna possível verificar os resultados produzidos por aquela ação. Se o resultado não for o que você esperava, então o teste falha. 
+
+**Exemplo:** Checar se o usuário ainda está presente. Caso após apagar a entrada do usuário ele continua presente o teste falhou. Aqui não há nenhuma outra ação que interaja com a aplicação de forma direta, mas sim realiza testes a respeito do seu estado após a etapa de **act**
+
+Essa separação clara do que está sendo preparado, o que está sendo testado e o que está sendo verificado torna os testes mais fáceis de ler e entender. É também uma maneira útil de garantir que você está apenas testando uma coisa de cada vez.
+
+## Executando seu primeiro teste
+
+Siga os próximos passos para adicionar um teste à sua aplicação e depois executá-lo:
+
+### Crie um arquivo
+
+Conforme mencionado acima, os arquivos precisam estar dentro da pasta **test/system** e devem terminar com o sufixo **_test.rb**. 
+É possível colocar dentro de uma subpasta a fim de organizar melhor os testes. Por exemplo, se eu tenho diversos testes de navegação, posso criar uma pasta com o nome **testenavegacao** e adicioná-la no diretório **test/system**, e todos os testes relacionados agora ficarão no diretório **test/system/testenavegacao**
+
+:::info Arquivos já estão criados!
+A fim de facilitar a estruturação, todos os arquivos que serão utilizados já estão disponíveis dentro dos diretórios.
 :::
 
-### Criando o primeiro arquivo de teste
+### Crie a estrutura básica do arquivo de teste
 
-Seguindo as regras acima, vamos crie seu primeiro teste dentro da pasta **spec** com o nome **teste_spec.rb**
-
-```
-touch spec/teste_spec.rb
-```
-
-Dentro do arquivo, adicione o **require** para carregar as configurações do Rspec e adicione o primeiro teste. 
-
-Este é um teste simples, com o objetivo de acessar a página Home da **orçafascio**.
+Em primeiro lugar, todos os arquivos de testes precisam de um *require* das nossas configurações definidas dentro de **application_system_test_case**. Além disso, é necessário que os testes estejam dentro de uma classe, e que essa classe herde a classe **ApplicationSystemTestCase**. A estrutura ficará parecida com este exemplo:
 
 ```
-require 'spec_helper'
+require "application_system_test_case"
 
-describe 'Testar página Home' do
-  it 'deve acessar a página principal da orçafascio' do
-    visit('https://orcafascio.com/')
-  end
+class PrimeiroTeste < ApplicationSystemTestCase
+  # TESTES REALIZADOS
 end
 ```
 
-### Entendendo a estrutura de um teste
-
-Acompanhe o significado de cada linha do teste nas descrições abaixo:
-
+O nome da classe e do arquivo normalmente são expressivos o suficiente para entender o que aquele conjunto de teste está verificando ou qual seu escopo geral.
 ___
-```
-describe 'Testar página Home' do
 
-end
-```
-Conforme visto anteriormente, o RSpec, assim como o Capybara, tem como objetivo deixar os testes mais próximos da nossa linguagem. Desta forma, ao criar um teste com o RSpec você está descrevendo o que aquele grupo de teste irá fazer. Neste caso, o grupo de testes irá testar funções e atividades relacionadas a página Home.
+### Adicione um teste dentro da sua classe
 
-Seria possível adicionar testes de outras páginas nesse grupo. Porém seria uma má-pratica, pois foge do escopo definido pelo * **describe** *, e tornaria mais difícil encontrar onde cada teste está localizado para fazer a manutenção do código, além de diminuir sua legibilidade.
-
-Por fim, o * **end** * ao final apenas está sinalizando que aquele grupo de testes iniciados na palavra * **do** * foi encerrado.
-
-___
-```
-it 'deve acessar a página principal da orçafascio' do
-
-end
-```
-
-A palavra * **it** * é usada para definir um exemplo ou um caso de teste específico dentro do grupo de testes definido pelo bloco describe. Cada caso de teste começa com * **it** *, seguido de uma descrição do que é esperado que aconteça nesse teste. A descrição deve ser escrita de uma maneira que seja fácil de entender para qualquer pessoa que esteja lendo o teste.
-
-Neste caso, **'deve acessar a página principal da orçafascio'** é a descrição do caso de teste. Quando o RSpec executa esse teste, é isso que se espera que aconteça. Se a expectativa for atendida, o teste será bem-sucedido. Se não, o teste falhará.
-
-A palavra do inicia o bloco de código que define o que exatamente o teste fará para verificar se a expectativa é atendida. Neste exemplo, ainda não  há código dentro deste bloco, mas é aqui que será colocado o código do teste.
-
-Assim como com o bloco * **describe** *, o * **end** * ao final do bloco * **it** * sinaliza que este caso de teste específico foi encerrado.
-___
-```
-visit('https://orcafascio.com/')
-```
-
-Enquanto as palavras * **describe** * e * **it** * são palavras reservadas do RSpec, o método * **visit** * é a primeira palavra que vemos que é própria da gem Capybara. O método * **visit** * é usado para instruir o Capybara a navegar para uma URL específica. Neste caso, está dizendo ao Capybara para visitar a página inicial do site da orçafascio, e desta forma apenas esse método já é capaz de por si só realizar o teste definido dentro do bloco * **it** *.
-
-Conforme visto no exemplo, a URL passada como parâmetro começa com o protocolo **https**, isto porque, da forma como o parâmetro foi passadoé obrigatório incluir o protocolo da conexão antes do endereço. 
-
-:::caution Atenção:
-É possível utilizar também o protocolo **http** para acessar esta página em específico, pois o servidor web da orçafascio automaticamente faz o redirecionamento para o protocolo **https**. No entanto, se so protocolo for suprimido o método * **visit** * falhará, e por consequência o teste também.
-:::
-
-Este método será um dos principais utilizados, pois ele é o responsável pela navegação do Capybara. Este método será abotdado de forma mais detalhada posteriormente, mas em linhas gerais ele é responsável por visitar uma página web passada como parâmetro.
-
-### Executando o RSpec
-
-Para executar todos os testes, basta que executar o comando ```rspec``` no terminal. Simples assim.
-
-Ao executar o código você verá algo semelhante ao gif abaixo:
-
-![imagem](../../static/img/capybara/primeiroteste.gif)
-
-### Verificando o resultado do Rspec
-
-Ao final do teste, o RSpec informa o tempo total para executar os testes, o tempo para fazer a leitura dos arquivos, a quantidade de testes e a quantidade de falhas.
-
-Caso não haja falhas e todos os testes passem, a saída será parecida com a imagem abaixo:
-
-![imagem](../../static/img/capybara/sucessoteste.png)
-
-Caso contrário, ele trará uma descrição específica sobre os erros:
-
-![imagem](../../static/img/capybara/falhateste.png)
-
-Veja que quando um teste falha, o Rspec trás detalhes sobre o teste que falhou, com o nome do grupo de teste, o nome do exemplo de teste e até o método específico que apresentou falha. Neste caso, é possível verificar que o erro se deu nesta parte:
-
-```Failure/Error: visit('http://orcafascsio.com/')```
-
-Aqui fica ainda mais clara a necessidade de dar nomes descritivos aos grupos e exemplos de testes, pois torna muito mais dinâmica e fácil a leitura das mensagens.
-
-Neste exemplo, o erro ocorreu pois a URL está incorreta, e o endereço **http://orcafascsio.com/** não existe. Sem se atentar ao terminal, este erro poderia ser difícil de compreender, pois apenas uma letra extra na URL causou a falha. O Rspec então auxilia a encontrar sem dificuldades o problema.
-
-:::note Erros:  
-A maior parte dos problemas poderá ser resolvida apenas verificando o terminal e suas mensagens de erro. Futuramente serão abordadas as mensagens de erro mais comuns e também outras formas de fazer depuração do código.
-:::

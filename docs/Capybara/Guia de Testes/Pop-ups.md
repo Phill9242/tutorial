@@ -32,10 +32,10 @@ end
 
 * Ao utilizar método ***within_window*** passando como parâmetro a janela_aberta, é possível interagir com essa janela dentro do bloco entre "do ... end";
 
-* Dentro deste bloco realize os testes normalmente;
+* Dentro deste bloco realize os testes normalmente.
 
-Claro que este exemplo utiliza de fato uma nova janela aberta, mas um popup segue o mesmo princípio, e utilizar esse método para realizar os testes funcionará corretamente.
+Claro que este exemplo utiliza de fato uma nova janela aberta, mas um popup segue o mesmo princípio, então utilizar esse método para realizar os testes funcionará corretamente.
 
 :::note Recapitulação
-Ao abrir uma nova janela ou popup com o método ***window_opened_by***, é possível mudar o contexto do teste com o método ***within_window***. Assim, é possível realizar os testes normalmente dentro deste bloco de código
+Ao abrir uma nova janela ou popup com o método ***window_opened_by***, é possível mudar o contexto do teste com o método ***within_window***. Assim, é possível realizar os testes normalmente dentro deste bloco de código.
 :::
