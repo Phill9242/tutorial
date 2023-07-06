@@ -40,7 +40,7 @@ Essa prática também será abordada neste tutorial em um ponto futuro. (TO DO)
 
 Antes de começar a escrever testes, é essencial entender completamente a funcionalidade do aplicativo que você está testando. Isso inclui como os usuários devem interagir com a aplicação, quais resultados são esperados e onde podem ocorrer problemas. Quando falamos de BDD e testes voltados ao usuário é isso que sempre temos que manter como foco.
 
-### Sai do "caminho feliz"
+### Saia do "caminho feliz"
 
 O caminho feliz é o comportamento esperado quando tudo sai exatamente como queríamos. Este é o cenário ideal, não o real. Testes devem abordar todos os caminhos possíveis: **Não se limite a testar o "caminho feliz"**. Por isso testar os cenários de erro é tão importante quanto testar cenários de acerto. Lembre-se: o usuário não está tão familiarizado com a aplicação quanto você, e provavelmente não sabe como ela deve se comportar. É seu papel assegurar que nada dará errado, mesmo quando ele não souber o que está fazendo.
 

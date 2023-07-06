@@ -151,7 +151,7 @@ A primeira é com os *screenshots* gerados automaticamente pelo rails. Sempre qu
 
 A segunda forma é através da mensagem do terminal. Em geral as mensagens são muito expressivas e podem dar uma boa dica de onde o erro ocorreu. Elas dão uma descrição breve do erro em inglês dando informações como **esperava encontrar o texto "Olá"**, ou seja, o texto não foi encontrado.
 
-Aqui está um exemplo real de uma falha:
+Aqui está um exemplo real de um erro:
 
 ![image](../../static/img/capybara/erroderota.png)
 
