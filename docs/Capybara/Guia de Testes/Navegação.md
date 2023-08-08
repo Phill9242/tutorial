@@ -92,7 +92,7 @@ A mensagem indica estava esperando apenas 1 elemento de formulários, mas que 2 
 
 :::tip Dica:
 Lembre-se: há várias formas de verificar se você está de fato na página que esperava. Pode ser verificando elementos HTML presentes, através de textos ou mesmo se elementos não estão presentes, como por exemplo em uma página de leitura onde não deve haver elementos de formulário.
-No final os testes irão depender da aplicação que você está testando.
+No final, os testes irão depender da aplicação que você está testando.
 :::
 
 ## Outros métodos de navegação
